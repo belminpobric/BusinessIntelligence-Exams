@@ -1,0 +1,385 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "name": "SqlServer localhost IB123456_DW",
+        "connectionString": "Provider=SQLNCLI11;Integrated Security=SSPI;Persist Security Info=false;Data Source=.;Initial Catalog=IB123456_DW",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "dim_employee",
+        "columns": [
+          {
+            "name": "dim_employee_id",
+            "dataType": "int64",
+            "sourceColumn": "dim_employee_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "PersonID",
+            "dataType": "int64",
+            "sourceColumn": "PersonID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "IsPermittedToLogon",
+            "dataType": "boolean",
+            "sourceColumn": "IsPermittedToLogon",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "Boolean"
+          },
+          {
+            "name": "IsSalesperson",
+            "dataType": "boolean",
+            "sourceColumn": "IsSalesperson",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "Boolean"
+          },
+          {
+            "name": "str_jez",
+            "dataType": "boolean",
+            "sourceColumn": "str_jez",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "Boolean"
+          },
+          {
+            "name": "god_zap",
+            "dataType": "int64",
+            "sourceColumn": "god_zap",
+            "sourceProviderType": "Integer"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_employee",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [dbo].[dim_employee].* FROM [dbo].[dim_employee] ",
+              "dataSource": "SqlServer localhost IB123456_DW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[dim_employee].* FROM [dbo].[dim_employee] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "dim_employee"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "dim_invoice_customers",
+        "columns": [
+          {
+            "name": "dim_invoice_customers_id",
+            "dataType": "int64",
+            "sourceColumn": "dim_invoice_customers_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "InvoiceID",
+            "dataType": "int64",
+            "sourceColumn": "InvoiceID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "CustomerName",
+            "dataType": "string",
+            "sourceColumn": "CustomerName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CreditLimit",
+            "dataType": "double",
+            "sourceColumn": "CreditLimit",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "br_dana_razl",
+            "dataType": "int64",
+            "sourceColumn": "br_dana_razl",
+            "sourceProviderType": "Integer"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_invoice_customers",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [dbo].[dim_invoice_customers].* FROM [dbo].[dim_invoice_customers] ",
+              "dataSource": "SqlServer localhost IB123456_DW"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "avg_CreditLimit",
+            "expression": "AVERAGE([CreditLimit])"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[dim_invoice_customers].* FROM [dbo].[dim_invoice_customers] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "dim_invoice_customers"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "dim_ta_types",
+        "columns": [
+          {
+            "name": "dim_ta_types",
+            "dataType": "int64",
+            "sourceColumn": "dim_ta_types",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "TransactionTypeID",
+            "dataType": "int64",
+            "sourceColumn": "TransactionTypeID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "TransactionTypeName",
+            "dataType": "string",
+            "sourceColumn": "TransactionTypeName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ValidFrom",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidFrom",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_ta_types",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [dbo].[dim_ta_types].* FROM [dbo].[dim_ta_types] ",
+              "dataSource": "SqlServer localhost IB123456_DW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[dim_ta_types].* FROM [dbo].[dim_ta_types] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "dim_ta_types"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "fact_CustTrans",
+        "columns": [
+          {
+            "name": "fact_CustTrans_id",
+            "dataType": "int64",
+            "sourceColumn": "fact_CustTrans_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FinalizationDate",
+            "dataType": "dateTime",
+            "sourceColumn": "FinalizationDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "AmountExcludingTax",
+            "dataType": "double",
+            "sourceColumn": "AmountExcludingTax",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "TaxAmount",
+            "dataType": "double",
+            "sourceColumn": "TaxAmount",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "TransactionAmount",
+            "dataType": "double",
+            "sourceColumn": "TransactionAmount",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "dim_invoice_customers_id",
+            "dataType": "int64",
+            "sourceColumn": "dim_invoice_customers_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "dim_employee_id",
+            "dataType": "int64",
+            "sourceColumn": "dim_employee_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "dim_ta_types",
+            "dataType": "int64",
+            "sourceColumn": "dim_ta_types",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "type": "calculated",
+            "name": "kvartal",
+            "dataType": "double",
+            "isDataTypeInferred": true,
+            "expression": "ROUNDUP(MONTH(fact_CustTrans[FinalizationDate])/3,0)"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_CustTrans",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [dbo].[fact_CustTrans].* FROM [dbo].[fact_CustTrans] ",
+              "dataSource": "SqlServer localhost IB123456_DW"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "sum_AmountExcludingTax",
+            "expression": "SUM([AmountExcludingTax])"
+          },
+          {
+            "name": "sum_TaxAmount",
+            "expression": "SUM([TaxAmount])"
+          },
+          {
+            "name": "sum_TransactionAmount",
+            "expression": "SUM([TransactionAmount])",
+            "kpi": {
+              "targetExpression": "450000",
+              "statusGraphic": "Traffic Light - Single",
+              "statusExpression": [
+                "var x='fact_CustTrans'[sum_TransactionAmount] return",
+                "            if(ISBLANK(x),BLANK(),",
+                "                    If(x<70000,-1,",
+                "\t                If(x<380000,0,1)",
+                "                )",
+                "            )",
+                "            "
+              ],
+              "annotations": [
+                {
+                  "name": "GoalType",
+                  "value": "StaticValue"
+                },
+                {
+                  "name": "KpiStatusType",
+                  "value": "Linear"
+                },
+                {
+                  "name": "KpiThresholdType",
+                  "value": "Absolute"
+                },
+                {
+                  "name": "KpiThresholdOrdering",
+                  "value": "Ascending"
+                },
+                {
+                  "name": "KpiThresholdCount",
+                  "value": "2"
+                },
+                {
+                  "name": "KpiThreshold_0",
+                  "value": "70000"
+                },
+                {
+                  "name": "KpiThreshold_1",
+                  "value": "380000"
+                }
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[fact_CustTrans].* FROM [dbo].[fact_CustTrans] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "fact_CustTrans"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "b95fc906-eea5-4550-8881-883451fc7e17",
+        "fromTable": "fact_CustTrans",
+        "fromColumn": "dim_employee_id",
+        "toTable": "dim_employee",
+        "toColumn": "dim_employee_id"
+      },
+      {
+        "name": "b09deeea-3ffd-4024-a974-b090125bdf18",
+        "fromTable": "fact_CustTrans",
+        "fromColumn": "dim_invoice_customers_id",
+        "toTable": "dim_invoice_customers",
+        "toColumn": "dim_invoice_customers_id"
+      },
+      {
+        "name": "936b50be-4fcb-4862-bd8f-702fff3d90ca",
+        "fromTable": "fact_CustTrans",
+        "fromColumn": "dim_ta_types",
+        "toTable": "dim_ta_types",
+        "toColumn": "dim_ta_types"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
