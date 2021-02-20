@@ -1,0 +1,1403 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/20/2021 11:27:35 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-9L8AENI"
+  DTS:CreatorName="DESKTOP-9L8AENI\LENOVO"
+  DTS:DTSID="{DB8A1D6D-8206-4DC3-8DBB-7AD1CB323D3F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.150"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="fact"
+  DTS:PackageType="5"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{E7F82F40-A074-4F73-93E1-B79EEFFB4290}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.IB123456_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{16A763F7-D4F0-45DE-B07C-CE46F04C0ED6}"
+      DTS:ObjectName="LocalHost.IB123456_DW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=IB123456_DW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.IB123456_DW 1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{2B7D2880-68A9-4802-89F2-D2B31A7C9D41}"
+      DTS:ObjectName="LocalHost.IB123456_DW 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=IB123456_DW;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.transakcije]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F89F78E8-E2B8-40F1-A9EF-B7EDE3C27617}"
+      DTS:ObjectName="LocalHost.transakcije">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=transakcije;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B5BD591C-1F7F-444F-96BE-4038CCEF1C05}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\dim_employee"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="dim_employee"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[dim_employee]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[dim_employee]) [refTable]
+where [refTable].[PersonID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="dim_employee_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PersonID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IsPermittedToLogon" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IsEmployee" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="firma" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="valid_god_int" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[LastEditedBy]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\dim_employee.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.IB123456_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.IB123456_DW]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\dim_employee.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\dim_employee.Inputs[Lookup Input].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[LastEditedBy]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">PersonID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\dim_employee.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Data Flow Task\dim_employee.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\dim_employee.Outputs[Lookup Match Output].Columns[dim_employee_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Data Flow Task\dim_employee.Outputs[Lookup Match Output].Columns[dim_employee_id]"
+                      name="dim_employee_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">dim_employee_id</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\dim_employee.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Data Flow Task\dim_employee.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\dim_employee.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Data Flow Task\dim_employee.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\dim_employee.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\dim_employee.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\dim_employee.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\dim_employee.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\dim_payment_customer"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="dim_payment_customer"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[dim_payment_customer]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[dim_payment_customer]) [refTable]
+where [refTable].[PaymentMethodID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="dim_payment_customer_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PaymentMethodID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PaymentMethodName" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CustomerID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TransactionDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[PaymentMethodID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\dim_payment_customer.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.IB123456_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.IB123456_DW]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\dim_payment_customer.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\dim_payment_customer.Inputs[Lookup Input].Columns[PaymentMethodID]"
+                      cachedDataType="i4"
+                      cachedName="PaymentMethodID"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[PaymentMethodID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">PaymentMethodID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Data Flow Task\dim_payment_customer.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup Match Output].Columns[dim_payment_customer_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup Match Output].Columns[dim_payment_customer_id]"
+                      name="dim_payment_customer_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">dim_payment_customer_id</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Data Flow Task\dim_payment_customer.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Data Flow Task\dim_payment_customer.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\dim_ta_types"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="dim_ta_types"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[dim_ta_types]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[dim_ta_types]) [refTable]
+where [refTable].[TransactionTypeID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="dim_ta_types_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TransactionTypeID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TransactionTypeName" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ValidFrom" dataType="DT_DBTIMESTAMP2" length="0" precision="0" scale="7" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TransactionTypeID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\dim_ta_types.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.IB123456_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.IB123456_DW]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\dim_ta_types.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\dim_ta_types.Inputs[Lookup Input].Columns[TransactionTypeID]"
+                      cachedDataType="i4"
+                      cachedName="TransactionTypeID"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TransactionTypeID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">TransactionTypeID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Data Flow Task\dim_ta_types.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup Match Output].Columns[dim_ta_types_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup Match Output].Columns[dim_ta_types_id]"
+                      name="dim_ta_types_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">dim_ta_types_id</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Data Flow Task\dim_ta_types.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Data Flow Task\dim_ta_types.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\fact_SuppTrans"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="fact_SuppTrans"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[fact_SuppTrans]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\fact_SuppTrans.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.IB123456_DW 1]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.IB123456_DW 1]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].Columns[TransactionDate]"
+                      cachedDataType="dbDate"
+                      cachedName="TransactionDate"
+                      externalMetadataColumnId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[TransactionDate]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TransactionDate]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].Columns[AmountExcludingTax]"
+                      cachedDataType="numeric"
+                      cachedName="AmountExcludingTax"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[AmountExcludingTax]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[AmountExcludingTax]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].Columns[TaxAmount]"
+                      cachedDataType="numeric"
+                      cachedName="TaxAmount"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[TaxAmount]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TaxAmount]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].Columns[TransactionAmount]"
+                      cachedDataType="numeric"
+                      cachedName="TransactionAmount"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[TransactionAmount]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TransactionAmount]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].Columns[dim_employee_id]"
+                      cachedDataType="i4"
+                      cachedName="dim_employee_id"
+                      externalMetadataColumnId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[dim_employee_id]"
+                      lineageId="Package\Data Flow Task\dim_employee.Outputs[Lookup Match Output].Columns[dim_employee_id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].Columns[dim_payment_customer_id]"
+                      cachedDataType="i4"
+                      cachedName="dim_payment_customer_id"
+                      externalMetadataColumnId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[dim_payment_customer_id]"
+                      lineageId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup Match Output].Columns[dim_payment_customer_id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].Columns[dim_ta_types_id]"
+                      cachedDataType="i4"
+                      cachedName="dim_ta_types_id"
+                      externalMetadataColumnId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[dim_ta_types_id]"
+                      lineageId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup Match Output].Columns[dim_ta_types_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[fact_SuppTrans_id]"
+                      dataType="i4"
+                      name="fact_SuppTrans_id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[TransactionDate]"
+                      dataType="dbDate"
+                      name="TransactionDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[AmountExcludingTax]"
+                      dataType="numeric"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[TaxAmount]"
+                      dataType="numeric"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[TransactionAmount]"
+                      dataType="numeric"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[dim_employee_id]"
+                      dataType="i4"
+                      name="dim_employee_id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[dim_payment_customer_id]"
+                      dataType="i4"
+                      name="dim_payment_customer_id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input].ExternalColumns[dim_ta_types_id]"
+                      dataType="i4"
+                      name="dim_ta_types_id" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\fact_SuppTrans.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\fact_SuppTrans.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\fact_SuppTrans.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\fact_SuppTrans.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\supplierTransactions"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="supplierTransactions"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Purchasing].[SupplierTransactions]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\supplierTransactions.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.transakcije]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.transakcije]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[SupplierTransactionID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[SupplierTransactionID]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[SupplierTransactionID]"
+                      name="SupplierTransactionID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[SupplierID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[SupplierID]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[SupplierID]"
+                      name="SupplierID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TransactionTypeID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[TransactionTypeID]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TransactionTypeID]"
+                      name="TransactionTypeID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[PurchaseOrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[PurchaseOrderID]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[PurchaseOrderID]"
+                      name="PurchaseOrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[PaymentMethodID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[PaymentMethodID]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[PaymentMethodID]"
+                      name="PaymentMethodID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[SupplierInvoiceNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[SupplierInvoiceNumber]"
+                      length="20"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[SupplierInvoiceNumber]"
+                      name="SupplierInvoiceNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TransactionDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[TransactionDate]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TransactionDate]"
+                      name="TransactionDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[AmountExcludingTax]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[AmountExcludingTax]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[AmountExcludingTax]"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TaxAmount]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[TaxAmount]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TaxAmount]"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TransactionAmount]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[TransactionAmount]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[TransactionAmount]"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[OutstandingBalance]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[OutstandingBalance]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[OutstandingBalance]"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[FinalizationDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[FinalizationDate]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[FinalizationDate]"
+                      name="FinalizationDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[IsFinalized]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[IsFinalized]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[IsFinalized]"
+                      name="IsFinalized"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[SupplierTransactionID]"
+                      dataType="i4"
+                      name="SupplierTransactionID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[SupplierID]"
+                      dataType="i4"
+                      name="SupplierID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[TransactionTypeID]"
+                      dataType="i4"
+                      name="TransactionTypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[PurchaseOrderID]"
+                      dataType="i4"
+                      name="PurchaseOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[PaymentMethodID]"
+                      dataType="i4"
+                      name="PaymentMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[SupplierInvoiceNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="SupplierInvoiceNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[TransactionDate]"
+                      dataType="dbDate"
+                      name="TransactionDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[AmountExcludingTax]"
+                      dataType="numeric"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[TaxAmount]"
+                      dataType="numeric"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[TransactionAmount]"
+                      dataType="numeric"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[OutstandingBalance]"
+                      dataType="numeric"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[FinalizationDate]"
+                      dataType="dbDate"
+                      name="FinalizationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[IsFinalized]"
+                      dataType="bool"
+                      name="IsFinalized" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[SupplierTransactionID]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[SupplierTransactionID]"
+                      name="SupplierTransactionID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[SupplierID]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[SupplierID]"
+                      name="SupplierID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[TransactionTypeID]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[TransactionTypeID]"
+                      name="TransactionTypeID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[PurchaseOrderID]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[PurchaseOrderID]"
+                      name="PurchaseOrderID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[PaymentMethodID]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[PaymentMethodID]"
+                      name="PaymentMethodID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[SupplierInvoiceNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[SupplierInvoiceNumber]"
+                      name="SupplierInvoiceNumber" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[TransactionDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[TransactionDate]"
+                      name="TransactionDate" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[AmountExcludingTax]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[AmountExcludingTax]"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[TaxAmount]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[TaxAmount]"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[TransactionAmount]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[TransactionAmount]"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[OutstandingBalance]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[OutstandingBalance]"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[FinalizationDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[FinalizationDate]"
+                      name="FinalizationDate" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[IsFinalized]"
+                      dataType="bool"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[IsFinalized]"
+                      name="IsFinalized" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[Lookup Match Output]"
+              endId="Package\Data Flow Task\dim_payment_customer.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Data Flow Task\dim_employee.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[Lookup Match Output1]"
+              endId="Package\Data Flow Task\dim_ta_types.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Data Flow Task\dim_payment_customer.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[Lookup Match Output2]"
+              endId="Package\Data Flow Task\fact_SuppTrans.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\Data Flow Task\dim_ta_types.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task\dim_employee.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task\supplierTransactions.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Data Flow Task"
+          TopLeft="115.000001958438,53.5294125154357" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="174.4,41.6"
+          Id="Package\Data Flow Task\supplierTransactions"
+          TopLeft="92.8571444384906,22.9411767923296" />
+        <NodeLayout
+          Size="146.4,41.6"
+          Id="Package\Data Flow Task\dim_employee"
+          TopLeft="115.000001958438,105.529413244716" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="180.057144438491,64.5411767923296">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.14285751994774,40.9882364523865"
+              Start="0,0"
+              End="8.14285751994774,33.4882364523865">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.4941182261933" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.4941182261933"
+                    Point2="0,20.4941182261933"
+                    Point3="4,20.4941182261933" />
+                  <mssgle:LineSegment
+                    End="4.14285751994774,20.4941182261933" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.14285751994774,20.4941182261933"
+                    Point2="8.14285751994774,20.4941182261933"
+                    Point3="8.14285751994774,24.4941182261933" />
+                  <mssgle:LineSegment
+                    End="8.14285751994774,33.4882364523865" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="192,41.6"
+          Id="Package\Data Flow Task\dim_payment_customer"
+          TopLeft="117.142859137788,196.423530741629" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Lookup Match Output]"
+          TopLeft="188.200001958438,147.129413244716">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="24.9428571793498,49.2941174969129"
+              Start="0,0"
+              End="24.9428571793498,41.7941174969129">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.6470587484565" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.6470587484565"
+                    Point2="0,24.6470587484565"
+                    Point3="4,24.6470587484565" />
+                  <mssgle:LineSegment
+                    End="20.9428571793498,24.6470587484565" />
+                  <mssgle:CubicBezierSegment
+                    Point1="20.9428571793498,24.6470587484565"
+                    Point2="24.9428571793498,24.6470587484565"
+                    Point3="24.9428571793498,28.6470587484565" />
+                  <mssgle:LineSegment
+                    End="24.9428571793498,41.7941174969129" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-35.7199581290751,29.6470587484565,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="141.6,41.6"
+          Id="Package\Data Flow Task\dim_ta_types"
+          TopLeft="142.857145289986,297.258824848551" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Lookup Match Output1]"
+          TopLeft="213.400002213887,238.023530741629">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.2352941069224"
+              Start="0,0"
+              End="0,51.7352941069224">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.7352941069224" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.0629595534612,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="152,41.6"
+          Id="Package\Data Flow Task\fact_SuppTrans"
+          TopLeft="139.285716657736,393.717651155663" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Lookup Match Output2]"
+          TopLeft="214.471430973861,338.858824848551">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.8588263071121"
+              Start="0,0"
+              End="0,47.3588263071121">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.3588263071121" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,17.874725653556,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\supplierTransactions">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\dim_employee">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[dim_employee]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\dim_payment_customer">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[dim_payment_customer]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\dim_ta_types">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[dim_ta_types]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\fact_SuppTrans">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
