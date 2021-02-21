@@ -1,0 +1,385 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "name": "SqlServer localhost IB123456_DW",
+        "connectionString": "Provider=SQLNCLI11;Data Source=.;Initial Catalog=IB123456_DW;Integrated Security=SSPI;Persist Security Info=false",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "dim_employee",
+        "columns": [
+          {
+            "name": "dim_employee_id",
+            "dataType": "int64",
+            "sourceColumn": "dim_employee_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "PersonID",
+            "dataType": "int64",
+            "sourceColumn": "PersonID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "IsPermittedToLogon",
+            "dataType": "boolean",
+            "sourceColumn": "IsPermittedToLogon",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "Boolean"
+          },
+          {
+            "name": "IsEmployee",
+            "dataType": "boolean",
+            "sourceColumn": "IsEmployee",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "Boolean"
+          },
+          {
+            "name": "firma",
+            "dataType": "string",
+            "sourceColumn": "firma",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "valid_god_int",
+            "dataType": "int64",
+            "sourceColumn": "valid_god_int",
+            "sourceProviderType": "Integer"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_employee",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [dbo].[dim_employee].* FROM [dbo].[dim_employee] ",
+              "dataSource": "SqlServer localhost IB123456_DW"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "count_PersonID",
+            "expression": "COUNTA([PersonID])"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[dim_employee].* FROM [dbo].[dim_employee] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "dim_employee"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "dim_payment_customer",
+        "columns": [
+          {
+            "name": "dim_payment_customer_id",
+            "dataType": "int64",
+            "sourceColumn": "dim_payment_customer_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "PaymentMethodID",
+            "dataType": "int64",
+            "sourceColumn": "PaymentMethodID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "PaymentMethodName",
+            "dataType": "string",
+            "sourceColumn": "PaymentMethodName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CustomerID",
+            "dataType": "int64",
+            "sourceColumn": "CustomerID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "TransactionDate",
+            "dataType": "dateTime",
+            "sourceColumn": "TransactionDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_payment_customer",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [dbo].[dim_payment_customer].* FROM [dbo].[dim_payment_customer] ",
+              "dataSource": "SqlServer localhost IB123456_DW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[dim_payment_customer].* FROM [dbo].[dim_payment_customer] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "dim_payment_customer"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "dim_ta_types",
+        "columns": [
+          {
+            "name": "dim_ta_types_id",
+            "dataType": "int64",
+            "sourceColumn": "dim_ta_types_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "TransactionTypeID",
+            "dataType": "int64",
+            "sourceColumn": "TransactionTypeID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "TransactionTypeName",
+            "dataType": "string",
+            "sourceColumn": "TransactionTypeName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "ValidFrom",
+            "dataType": "dateTime",
+            "sourceColumn": "ValidFrom",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_ta_types",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [dbo].[dim_ta_types].* FROM [dbo].[dim_ta_types] ",
+              "dataSource": "SqlServer localhost IB123456_DW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[dim_ta_types].* FROM [dbo].[dim_ta_types] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "dim_ta_types"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "fact_SuppTrans",
+        "columns": [
+          {
+            "name": "fact_SuppTrans_id",
+            "dataType": "int64",
+            "sourceColumn": "fact_SuppTrans_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "TransactionDate",
+            "dataType": "dateTime",
+            "sourceColumn": "TransactionDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "AmountExcludingTax",
+            "dataType": "double",
+            "sourceColumn": "AmountExcludingTax",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "TaxAmount",
+            "dataType": "double",
+            "sourceColumn": "TaxAmount",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "TransactionAmount",
+            "dataType": "double",
+            "sourceColumn": "TransactionAmount",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "dim_employee_id",
+            "dataType": "int64",
+            "sourceColumn": "dim_employee_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "dim_payment_customer_id",
+            "dataType": "int64",
+            "sourceColumn": "dim_payment_customer_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "dim_ta_types_id",
+            "dataType": "int64",
+            "sourceColumn": "dim_ta_types_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "type": "calculated",
+            "name": "kvartal",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "QUARTER(fact_SuppTrans[TransactionDate])"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fact_SuppTrans",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " SELECT [dbo].[fact_SuppTrans].* FROM [dbo].[fact_SuppTrans] ",
+              "dataSource": "SqlServer localhost IB123456_DW"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "sum_AmountExcludingTax",
+            "expression": "SUM([AmountExcludingTax])"
+          },
+          {
+            "name": "sum_TaxAmount",
+            "expression": "SUM([TaxAmount])",
+            "kpi": {
+              "targetExpression": "6500000",
+              "statusGraphic": "Traffic Light - Single",
+              "statusExpression": [
+                "var x='fact_SuppTrans'[sum_TaxAmount] return",
+                "            if(ISBLANK(x),BLANK(),",
+                "                    If(x<1300000,-1,",
+                "\t                If(x<5200000,0,1)",
+                "                )",
+                "            )",
+                "            "
+              ],
+              "annotations": [
+                {
+                  "name": "GoalType",
+                  "value": "StaticValue"
+                },
+                {
+                  "name": "KpiStatusType",
+                  "value": "Linear"
+                },
+                {
+                  "name": "KpiThresholdType",
+                  "value": "Absolute"
+                },
+                {
+                  "name": "KpiThresholdOrdering",
+                  "value": "Ascending"
+                },
+                {
+                  "name": "KpiThresholdCount",
+                  "value": "2"
+                },
+                {
+                  "name": "KpiThreshold_0",
+                  "value": "1300000"
+                },
+                {
+                  "name": "KpiThreshold_1",
+                  "value": "5200000"
+                }
+              ]
+            }
+          },
+          {
+            "name": "sum_TransactionAmount",
+            "expression": "SUM([TransactionAmount])"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " SELECT [dbo].[fact_SuppTrans].* FROM [dbo].[fact_SuppTrans] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "fact_SuppTrans"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "a23506f2-6b13-4594-a527-e86ce61d6ddf",
+        "fromTable": "fact_SuppTrans",
+        "fromColumn": "dim_employee_id",
+        "toTable": "dim_employee",
+        "toColumn": "dim_employee_id"
+      },
+      {
+        "name": "4c5bc81e-87ba-4d8e-837f-18196cd80c48",
+        "fromTable": "fact_SuppTrans",
+        "fromColumn": "dim_payment_customer_id",
+        "toTable": "dim_payment_customer",
+        "toColumn": "dim_payment_customer_id"
+      },
+      {
+        "name": "fdbe3dea-9d8c-4168-a26d-feba883e14d8",
+        "fromTable": "fact_SuppTrans",
+        "fromColumn": "dim_ta_types_id",
+        "toTable": "dim_ta_types",
+        "toColumn": "dim_ta_types_id"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
